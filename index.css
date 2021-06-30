@@ -1,0 +1,122 @@
+body{
+	background-color: lightcoral;
+}
+
+ol, ul {
+	list-style: none;
+	/* gets rid of bullets next to chat boxes */
+}
+
+
+
+.block--background{
+	display: flex;
+	flex-wrap: wrap;
+	width: 90vw;
+	height: 90vw;
+	background-color: lightslategray;
+	justify-content: center;
+}
+
+.chatbot__overview {
+	border: 5px solid blue;
+	display: flex;
+	flex-flow: row nowrap;
+	width: 80vw;
+	height: 80vw;
+	/* align-content: space-between; */
+	/* margin: 10px; */
+	/* padding: 1em;
+	padding-bottom: 0; */
+	/* background-color: #a03c3c; */
+}
+
+/* all chat bubbles have this */
+.chatlist .userInput, .chatlist .bot__output {
+	padding: 0.85em;
+	margin: 0.5em;
+	max-width: 100%;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.chatlist {
+	font-family: inherit;
+	font-size: 1em;
+	display: flex;
+	flex-flow: column nowrap;
+	align-items: flex-end;
+	overflow-x: hidden;
+	width: 100vw;
+	max-height: 80vh;
+	margin-left: -40px;
+	/* ^^ because chats are a ul, there was a weird indent here */
+}
+
+/* USER INPUT */
+.chatlist .userInput {
+	text-transform: lowercase;
+	border-top: 6px solid rgb(91, 146, 160);
+	opacity: 1;
+	animation-name: animateBubble;
+	animation-duration: 0.25s;
+	animation-iteration-count: 1;
+	animation-play-state: running;
+	animation-fill-mode: forwards;
+}
+
+.userInput:before {
+	/* adds little triangle at bottom of bubble */
+	content: "";
+	width: 0px;
+	height: 0px;
+	position: fixed;
+	border-left: 8px solid transparent;
+	border-right: 10px solid #fff;
+	border-top: 10px solid #fff;
+	border-bottom: 8px solid transparent;
+	right: 10px;
+	bottom: -12px;
+  }
+
+/* BOTS ANSWERS */
+.chatlist .bot__output {
+	align-self: flex-start;
+	/* flex-wrap: wrap; */
+	/* box-shadow: -1px 1px 10px rgb(255, 255, 255); */
+	border-top: 6px solid #dfb80b;
+	/* background-color: #dfb80b; */
+	will-change: auto;
+	height: auto;
+	opacity: 1;
+	animation-name: animateBubble;
+	animation-duration: 0.25s;
+	animation-iteration-count: 1;
+	animation-play-state: paused;
+	animation-fill-mode: forwards;
+}
+
+.bot__output:before {
+	/* adds little triangle at bottom of bubble */
+	content: "";
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	border-left: 10px solid #fff;
+	border-right: 8px solid transparent;
+	border-top: 10px solid #fff;
+	border-bottom: 8px solid transparent;
+	left: 10px;
+	bottom: -12px;
+  }
+
+
+
+#chatform{
+	background-color: lightyellow;
+	display: flex;
+	justify-content: center;
+	width: 80vw;
+}
+
+

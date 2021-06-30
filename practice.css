@@ -1,0 +1,323 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Roboto');
+ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	 margin: 0;
+	 padding: 0;
+	 border: 0;
+	 font-size: 100%;
+	 font: inherit;
+	 /* vertical-align: baseline; */
+	 display: flex;
+	 flex-direction: column;
+
+}
+
+/* HTML5 display-role reset for older browsers */
+ /* article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	 display: flex;
+} */
+
+ /* body {
+	 line-height: 1;
+}
+*/ 
+
+ ol, ul {
+	 list-style: none;
+	 /* gets rid of bullets next to chat boxes */
+}
+
+/* 
+ blockquote, q {
+	 quotes: none;
+}
+ blockquote:before, blockquote:after, q:before, q:after {
+	 content: '';
+	 content: none;
+} */
+
+table {
+	 border-collapse: collapse;
+	 border-spacing: 0;
+}
+ *, *:before, *:after {
+	 box-sizing: border-box;
+} 
+ body {
+	 overflow-x: hidden;
+	 font-family: 'Roboto', sans-serif;
+	 font-weight: 400;
+	 font-size: 16px;
+	 font-size: 1em;
+	 -moz-osx-font-smoothing: grayscale;
+	 -webkit-font-smoothing: antialiased;
+	 line-height: 1.5;
+	 /* background-color: #36363644; */
+}
+ .chatbot__overview {
+	 background-color: #c2c2c2;
+	 display: flex;
+	 flex-flow: row nowrap;
+	 align-content: space-between;
+	 min-height: 80vh;
+	 max-height: 80vh;
+	 margin: 0 auto;
+	 padding: 1em;
+	 padding-bottom: 0;
+}
+ .chatlist {
+	 font-family: inherit;
+	 font-size: 1em;
+	 display: flex;
+	 flex-flow: column wrap;
+	 /* align-items: flex-end; */
+	 overflow-x: hidden;
+	 width: 90vw;
+	 max-height: 80vh;
+	 /* margin: 0 auto; */
+}
+
+/* all chat bubbles have this */
+ .chatlist .userInput, .chatlist .bot__output {
+	 padding: 0.85em;
+	 margin: 0.5em;
+	 max-width: 100%;
+	 background-color: #fff;
+	 border-radius: 5px;
+
+}
+/* USER INPUT */
+ .chatlist .userInput {
+	 text-transform: lowercase;
+	 /* box-shadow: 1px 1px 2px #666; */
+	 border-top: 6px solid rgb(54, 98, 109);
+	 /* background-color: rgb(54, 98, 109); */
+	 opacity: 0;
+	 animation-name: animateBubble;
+	 animation-duration: 0.25s;
+	 animation-iteration-count: 1;
+	 animation-play-state: running;
+	 animation-fill-mode: forwards;
+}
+.userInput:before {
+	/* adds little triangle at bottom of bubble */
+	content: "";
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	border-left: 8px solid transparent;
+	border-right: 10px solid #fff;
+	border-top: 10px solid #fff;
+	border-bottom: 8px solid transparent;
+	right: 10px;
+	bottom: -12px;
+  }
+
+/* BOTS ANSWERS */
+ .chatlist .bot__output {
+	 align-self: flex-start;
+	 /* flex-wrap: wrap; */
+	 /* box-shadow: -1px 1px 10px rgb(255, 255, 255); */
+	 border-top: 6px solid #dfb80b;
+	 /* background-color: #dfb80b; */
+	 will-change: auto;
+	 height: auto;
+	 opacity: 0;
+	 animation-name: animateBubble;
+	 animation-duration: 0.25s;
+	 animation-iteration-count: 1;
+	 animation-play-state: paused;
+	 animation-fill-mode: forwards;
+}
+
+.bot__output:before {
+	/* adds little triangle at bottom of bubble */
+	content: "";
+	width: 0px;
+	height: 0px;
+	position: absolute;
+	border-left: 10px solid #fff;
+	border-right: 8px solid transparent;
+	border-top: 10px solid #fff;
+	border-bottom: 8px solid transparent;
+	left: 10px;
+	bottom: -12px;
+  }
+
+
+
+ .chatlist .bot__output:last-child {
+	 display: flex;
+	 
+}
+ .chatlist .bot__command {
+	 background-color: red;
+	 color: rgb(195, 113, 113);
+	 width: min-content;
+	 font-weight: 600;
+	 /* padding: 0.1em; */
+}
+
+/* delays annimation for each line of chat */
+ .chatlist .bot__output:nth-child(1) {
+	 animation-delay: 600ms;
+	 animation-play-state: running;
+}
+ .chatlist .bot__output:nth-child(2) {
+	 animation-delay: 1200ms;
+	 animation-play-state: running;
+}
+ .chatlist .bot__output:nth-child(3) {
+	 animation-delay: 1800ms;
+	 animation-play-state: running;
+}
+ .chatlist .bot__output--standard:last-child {
+	 display: block;
+}
+ .chatlist .bot__output--failed {
+	 display: block !important;
+}
+ .chatlist .bot__output--second-sentence {
+	 display: block;
+}
+ /* .chatlist .bot__outputImage {
+	 max-width: 16em;
+	 height: 12em;
+} */
+
+/* dops down the chat boxes one by one */
+ @keyframes animateBubble {
+	 0% {
+		 /* Y comes from top and X from sides */
+		 /* transform: translateY(-50%); */
+		 
+		 transform: translateX(-50%);
+		 opacity: 0;
+	}
+	 100% {
+		 transform: translateY(0);
+		 opacity: 1;
+	}
+}
+
+/* bottom block area */
+ .block--background {
+	 background-color: #c0c0c083;
+	 /* width: 100vw;
+	 height: 100vh; */
+}
+ #chatform {
+	 /* background-color: gray; */
+	 display: flex;
+	 flex-direction: row;
+	 justify-content: center;
+	 width: 80vw;
+	/* max-width: 80vw; */
+	 /* margin: 0 auto; */
+	 padding: 1em;
+	 font-size: 1em;
+	 font-family: Helvetica;
+}
+ /* @media screen and (max-width: 29em) {
+	 #chatform {
+		 width: 90%;
+	}
+} */
+
+ .chatbox-area {
+	 /* margin: 0 auto; */
+	 /* position: relative; */
+	 /* bottom: 0; */
+	 height: 10vh;
+	 width: 100vw;
+}
+ textarea[name="chatbox"] {
+	 resize: none;
+	 border: 2px solid rgb(195, 113, 113);
+	 width: 70vw;
+	 background-color: transparent;
+	 color: #fff;
+	 height: 3em;
+	 margin: 0;
+	 padding: 0.75em;
+	 border-radius: 8px 0px 0px 8px;
+	 font-family: inherit;
+	 font-size: 1em;
+}
+ textarea[name="chatbox"]:focus {
+	 outline: none;
+	 border: 2px solid #af5d5d63;
+}
+
+ ::-webkit-input-placeholder {
+	/* WebKit, Blink, Edge */
+	 color: #fff;
+}
+ :-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	 color: #fff;
+	 opacity: 1;
+}
+ ::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	 color: #fff;
+	 opacity: 1;
+}
+
+ input[type="submit"] {
+	 -webkit-appearance: none;
+	 appearance: none;
+	 border: 0;
+	 width: 25%;
+	 margin: 0;
+	 background-color: #fff;
+	 color: #af5d5d;
+	 /* border: 5px solid #af5d5d; */
+	 border-left: 0;
+	 border-radius: 0 10px 10px 0;
+	 font-family: inherit;
+	 font-size: 1em;
+	 transition: 200ms all ease-in;
+}
+ input[type="submit"]:hover {
+	 background-color: #af5d5d;
+	 border-color: #fff;
+	 color: #fff;
+}
+ .input__nested-list {
+	 list-style: disc;
+	 list-style-position: inside;
+	 padding: 0.5em;
+}
+ .input__nested-list:first-child {
+	 padding-top: 1em;
+}
+ .input__nested-link {
+	 color: #2ecc71;
+	 text-decoration: none;
+	 border-bottom: 4px solid #2ecc71;
+}
+ ::-webkit-scrollbar {
+	 width: 0.65em;
+	/* for vertical scrollbars */
+	 height: 0.65em;
+	/* for horizontal scrollbars */
+}
+ ::-webkit-scrollbar-track {
+	 background: rgba(0, 0, 0, 0.1);
+}
+ ::-webkit-scrollbar-thumb {
+	 background: rgba(0, 0, 0, 0.3);
+}
+
+
+/* JORDAN'S ADD ONS */
+
+
+.fakeButton {
+	font: bold 1.5em Arial;
+	background-color: #af5d5d;
+	color: #fff;
+	padding: 6px 10px 6px 10px;
+	border-radius: 10px;
+  }
+ 
