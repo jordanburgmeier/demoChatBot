@@ -5,14 +5,15 @@ var sendForm = document.querySelector('#chatform'),
     botBubble = document.querySelectorAll('.bot__output'),
     animateBotBubble = document.querySelectorAll('.bot__input--animation'),
     overview = document.querySelector('.chatbot__overview'),
+
     hasCorrectInput,
-    // imgLoader = false,
     animationCounter = 1,
     animationBubbleDelay = 600,
     input,
     previousInput,
     isReaction = false,
-    unkwnCommReaction = "I didn't quite get that.",
+
+    unkwnCommReaction = "I didn't get that.",
     chatbotButton = document.querySelector(".submit-button")
 
 sendForm.onkeydown = function(e){
@@ -92,7 +93,7 @@ var checkInput = function(input) {
   }
 }
 
-// debugger;
+// debugger -- kinda 
 
 function botResponse(textVal) {
   //sets previous input to what was called
@@ -114,7 +115,7 @@ function botResponse(textVal) {
   if(isReaction == false){
     //Is the command a function?
     if (typeof possibleInput[textVal] === "function") {
-      // console.log(possibleInput[textVal] +" is a function");
+       console.log(possibleInput[textVal] +" is a function");
     //adds input of textarea to chatbubble list item
       userBubble.innerHTML = possibleInput[textVal]();
     } else {
@@ -143,30 +144,24 @@ function unknownCommand(unkwnCommReaction) {
   //add list item to chatlist
   chatList.appendChild(failedResponse) //adds chatBubble to chatlist
 
-  animateBotOutput();
+  animateBotOutput(); // pushes it through 
 
   // reset text area input
   textInput.value = "";
 
   //Sets chatlist scroll to bottom
   chatList.scrollTop = chatList.scrollHeight;
-
   animationCounter = 1;
 }
 
 function responseText(e) {
-
   var response = document.createElement('li');
-
   response.classList.add('bot__output');
 
   //Adds whatever is given to responseText() to response bubble
   response.innerHTML = e;
-
   chatList.appendChild(response);
-
   animateBotOutput();
-
   console.log(response.clientHeight);
 
   //Sets chatlist scroll to bottom
@@ -176,26 +171,6 @@ function responseText(e) {
   }, 0)
 }
 
-// function responseImg(e) {
-//   var image = new Image();
-
-//   image.classList.add('bot__output');
-//   //Custom class for styling
-//   image.classList.add('bot__outputImage');
-//   //Gets the image
-//   image.src = "/images/"+e;
-//   chatList.appendChild(image);
-
-//   animateBotOutput()
-//   if(image.completed) {
-//     chatList.scrollTop = chatList.scrollTop + image.scrollHeight;
-//   }
-//   else {
-//     image.addEventListener('load', function(){
-//       chatList.scrollTop = chatList.scrollTop + image.scrollHeight;
-//     })
-//   }
-// }
 
 //This loop changes it when you hit enter (e) 
 function animateBotOutput() {
@@ -209,103 +184,59 @@ function commandReset(e){
 }
 
 var hi = ['hi','howdy','hello','hey'];
+const greetings = ['hi','howdy','hello','hey'];
 
 var possibleInput = {
   "help" : function(){
     responseText("You can type a command in the chatbox")
-    responseText("Something like &quot;Please show me places to get food.&quot;")
-    responseText("Did you find a bug or problem? Tweet me @MeesRttn")
     commandReset(0);
     return
     },
-    "hi" : function(){
-      responseText(hi[Math.floor(Math.random()*(hi.length))])
-      commandReset(9);
-      return
-      },  
-  "food" : function(){
-    responseText("Let's find a place to eat!");
-    responseText("Link <a href='#animation'>try this place</a>")
-    responseText("These are his <a href='#projects'>best projects</a>")
-    responseText("Would you like to see how I was built? (Yes/No)")
+  "hi" : function(){
+    responseText(hi[Math.floor(Math.random()*(hi.length))])
     commandReset(1);
     return
-    },
-  "about" : function(){
-    responseText("This is me, Navvy's maker, Mees Rutten");
-    responseText("I'm a 22 year old Communication and Multimedia Design student");
-    responseText("My ambition is to become a great Creative Front-End Developer");
-    responseText("Would you like to know about Mees' vision? (Yes/No)");
+    },  
+  "food" : function(){
+    responseText("Let's find a place to eat!");
+    responseText("This is one of my favs: <a href='https://www.salweenthai.com/'>Salween Thai</a>");
+    responseText("Would you like to see more? (Yes/No)")
     commandReset(2);
     return
     },
-  "experience" : function(){
-    responseText("Mees has previously worked at:");
-    responseText("Cobra Systems as web- developer / designer Cobra Systems as web- developer / designerCobra Systems as web- developer / designerCobra Systems as web- developer / designer");
-    responseText("BIT Students as web- developer / designer");
-    responseText("MediaMonks as a junior Front-end Developer");
+  "about" : function(){
+    responseText("This project was designed with html, css and javascript");
+    responseText("Would you like to know more? (Yes/No)");
     commandReset(3);
     return
-  },
-  "hobbies" : function(){
-    responseText("Mees loves:");
-    responseText("Coding complicated chatbots");
-    responseText("Family time");
-    responseText("Going out with friends");
-    responseText("Working out");
+    },
+  "commands" : function(){
+    responseText("This is a list of commands I know:");
+    responseText("help, about, one, two, ...");
     commandReset(4);
     return
   },
-  "interests" : function(){
-    responseText("Mees loves:");
-    responseText("Coding complicated chatbots");
-    responseText("Family time");
-    responseText("Going out with friends");
-    responseText("Working out");
+  "it going" : function(){
+    responseText("good, are you well?");
     commandReset(5);
-    return
-  },
-  "vision" : function(){
-    responseText("Things I want to learn or do:");
-    responseText("Get great at CSS & JS animation");
-    responseText("Create 3D browser experiences");
-    responseText("Learn Three.js and WebGL");
-    responseText("Combine Motion Design with Front-End");
-    commandReset(6);
-    return
-  },
-  "contact" : function(){
-    responseText("email: <a href='mailto:meesrutten@gmail.com?Subject=Hello%20Mees' target='_top'>send me a message</a>");
-    responseText("Twitter: <a href='https://twitter.com/meesrttn'>@MeesRttn</a>");
-    commandReset(7);
-    return
-  },
-  "commands" : function(){
-    responseText("This is a list of commands I know:")
-    responseText("help, about, food and sight seeing");
-    commandReset(8);
-    return
-  },
-
-  "rick roll" : function(){
-    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     },
 }
 
 var reactionInput = {
   "food" : function(){
-    responseText("One this page you'll find a list of my favorite places to eat in Omaha");
-    responseText("<a class='fakeButton' href='https://www.google.com/'>Click here!</a>")
-    animationCounter = 1;
+    responseText("On this page you'll find a list of my favorite places to eat in Omaha");
+    responseText("<a class='fakeButton' href='https://www.google.com/search?q=omaha+food+%3A%29&ei=-B_eYLj6KuKmqtsP25W80AQ&oq=omaha+food+%3A%29&gs_lcp=Cgdnd3Mtd2l6EAMyBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yCQgAEMkDEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjIGCAAQFhAeMgYIABAWEB4yBggAEBYQHjoHCAAQRxCwAzoHCAAQsAMQQzoQCC4QxwEQrwEQsAMQyAMQQzoQCC4QxwEQowIQsAMQyAMQQzoKCC4QsAMQyAMQQzoCCAA6BQgAEMkDOgQIABBDSgUIOBIBMUoECEEYAFD-C1jeE2DMFWgBcAJ4AIABZogBwwKSAQMzLjGYAQCgAQGqAQdnd3Mtd2l6yAENwAEB&sclient=gws-wiz&ved=0ahUKEwi41uLa1cLxAhVik2oFHdsKD0oQ4dUDCA4&uact=5'>Click here!</a>")
+    animationCounter = 2; // the num links it to the first message before the y/n 
     return
   },
   "about" : function(){
-    responseText("Things I want to learn or do:");
-    responseText("Get great at CSS & JS animation");
-    responseText("Create 3D browser experiences");
-    responseText("Learn Three.js and WebGL");
-    responseText("Combine Motion Design with Front-End");
-    animationCounter = 1;
+    responseText("more about this project here");
+    animationCounter = 3;
+    return
+    },
+  "it going" : function(){
+    responseText("What can I help you with today?");
+    animationCounter = 5; // the num links it to the first message before the y/n 
     return
     }
 }
